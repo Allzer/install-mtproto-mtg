@@ -71,7 +71,6 @@ install_docker_if_needed() {
   else
     info "Установка Docker из официального репозитория Alpine"
 
-    # Включаем community репозиторий (если не включён)
     if ! grep -q "^http.*community" /etc/apk/repositories; then
       echo "http://dl-cdn.alpinelinux.org/alpine/$(cat /etc/alpine-release | cut -d. -f1,2)/community" >> /etc/apk/repositories
     fi
@@ -79,7 +78,6 @@ install_docker_if_needed() {
     apk update
     apk add docker docker-cli containerd runc openrc
 
-    # Запускаем Docker при загрузке
     rc-update add docker boot
     service docker start || true
 
